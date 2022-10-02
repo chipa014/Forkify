@@ -97,7 +97,6 @@ export const toggleBookmark = function (recipe) {
 
 export const uploadRecipe = async function (newRecipe) {
   try {
-    console.log(newRecipe);
     const ingredients = Object.entries(newRecipe)
       .filter(el => el[0].startsWith('ingredient') && el[1] !== '')
       .map(el => {

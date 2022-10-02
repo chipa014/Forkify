@@ -23,7 +23,6 @@ const controlRecipe = async function () {
 
     // 0) Update search results page and bookmarks to mark the selected result
     searchResultsView.update(model.getSearchResultsPage());
-    console.log('hi');
     bookmarksView.update(model.state.bookmarks);
     // 1) Loading recipe
     await model.loadRecipe(id);
@@ -32,7 +31,6 @@ const controlRecipe = async function () {
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderError();
-    console.error(err.message);
   }
 };
 

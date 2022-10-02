@@ -14,7 +14,6 @@ class AddRecipeView extends View {
   constructor() {
     super();
     this._addHandlerOpenWindow();
-    console.log(this._btnOpen);
   }
 
   _openWindow() {
@@ -29,7 +28,6 @@ class AddRecipeView extends View {
 
   _closeWindowKeydown(e) {
     if (e.key !== 'Escape') return;
-    console.log(this);
     this.closeWindow();
   }
 
