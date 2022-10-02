@@ -81,6 +81,7 @@ export default class View {
   }
 
   _clear() {
+    console.log(this);
     this._parentElement.innerHTML = '';
   }
 
