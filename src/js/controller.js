@@ -15,10 +15,6 @@ const recipeContainer = document.querySelector('.recipe');
 
 ///////////////////////////////////////
 
-if (module.hot) {
-  module.hot.accept();
-}
-
 const controlRecipe = async function () {
   try {
     const id = window.location.hash.slice(1);
