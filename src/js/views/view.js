@@ -79,6 +79,7 @@ export default class View {
    * @param {String} message  Message to display. This is set to View class's _errorMessage property by default
    */
   renderError(message = this._errorMessage) {
+    console.error(message);
     const errorMarkup = `
       <div class="error">
         <div>

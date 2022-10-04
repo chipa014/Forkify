@@ -4,90 +4,157 @@ import { MODAL_MESSAGE_DISPLAY_TIME, MODAL_FADEOUT } from '../config.js';
 
 // TO DO:
 // Explain errors
-// Do proper ingredient fields
 // Don't call successful recipe if it is not successful
 const emptyFormMarkup = `
-<div class="upload__column">
-<h3 class="upload__heading">Recipe data</h3>
-<label>Title</label>
-<input
-  value="Classic Cheese Sandwhich"
-  required
-  name="title"
-  type="text"
-/>
-<label>URL</label>
-<input
-  value="https://www.allrecipes.com/recipe/23891/grilled-cheese-sandwich/"
-  required
-  name="sourceUrl"
-  type="text"
-/>
-<label>Image URL</label>
-<input
-  value="https://www.allrecipes.com/thmb/_LWAiEjctfCof1OIDvp-IbO5xrQ=/2250x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/23891-grilled-cheese-sandwich-molly-1x1-1-b241c5d092c54aafa2d81cdd4e5a8e07.jpg"
-  required
-  name="image"
-  type="text"
-/>
-<label>Publisher</label>
-<input value="Allrecipes" required name="publisher" type="text" />
-<label>Prep time</label>
-<input value="20" required name="cookingTime" type="number" />
-<label>Servings</label>
-<input value="2" required name="servings" type="number" />
-</div>
+  <div class="upload__column upload__column__info">
+    <h3 class="upload__heading">Recipe data</h3>
+    <label>Title</label>
+    <input
+      value="Classic Cheese Sandwhich"
+      required
+      name="title"
+      type="text"
+    />
+    <label>URL</label>
+    <input
+      value="https://www.allrecipes.com/recipe/23891/grilled-cheese-sandwich/"
+      required
+      name="sourceUrl"
+      type="text"
+    />
+    <label>Image URL</label>
+    <input
+      value="https://www.allrecipes.com/thmb/_LWAiEjctfCof1OIDvp-IbO5xrQ=/2250x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/23891-grilled-cheese-sandwich-molly-1x1-1-b241c5d092c54aafa2d81cdd4e5a8e07.jpg"
+      required
+      name="image"
+      type="text"
+    />
+    <label>Publisher</label>
+    <input value="Allrecipes" required name="publisher" type="text" />
+    <label>Prep time</label>
+    <input value="20" required name="cookingTime" type="number" />
+    <label>Servings</label>
+    <input value="2" required name="servings" type="number" />
+  </div>
 
-<div class="upload__column">
-<h3 class="upload__heading">Ingredients</h3>
-<label>Ingredient 1</label>
-<input
-  value="4,slices,white bread"
-  type="text"
-  required
-  name="ingredient-1"
-  placeholder="Format: 'Quantity,Unit,Description'"
-/>
-<label>Ingredient 2</label>
-<input
-  value="3,tablespoons,butter"
-  type="text"
-  name="ingredient-2"
-  placeholder="Format: 'Quantity,Unit,Description'"
-/>
-<label>Ingredient 3</label>
-<input
-  value="2,slices,cheddar cheese"
-  type="text"
-  name="ingredient-3"
-  placeholder="Format: 'Quantity,Unit,Description'"
-/>
-<label>Ingredient 4</label>
-<input
-  type="text"
-  name="ingredient-4"
-  placeholder="Format: 'Quantity,Unit,Description'"
-/>
-<label>Ingredient 5</label>
-<input
-  type="text"
-  name="ingredient-5"
-  placeholder="Format: 'Quantity,Unit,Description'"
-/>
-<label>Ingredient 6</label>
-<input
-  type="text"
-  name="ingredient-6"
-  placeholder="Format: 'Quantity,Unit,Description'"
-/>
-</div>
+  <div class="upload__column upload__column__ingredients">
+    <h3 class="upload__heading">Ingredients</h3>
+    <label>Ingredient 1</label>
+    <input
+      value="4"
+      type="text"
+      required
+      name="ingredient-quantity-1"
+      placeholder="Quantity"
+    />
+    <input
+      value="slice"
+      type="text"
+      required
+      name="ingredient-unit-1"
+      placeholder="Unit"
+    />
+    <input
+      value="white bread"
+      type="text"
+      required
+      name="ingredient-description-1"
+      placeholder="Description"
+    />
+    <label>Ingredient 2</label>
+    <input
+      value="3"
+      type="text"
+      name="ingredient-quantity-2"
+      placeholder="Quantity"
+    />
+    <input
+      value="tablespoon"
+      type="text"
+      name="ingredient-unit-2"
+      placeholder="Unit"
+    />
+    <input
+      value="butter"
+      type="text"
+      name="ingredient-description-2"
+      placeholder="Description"
+    />
+    <label>Ingredient 3</label>
+    <input
+      value="2"
+      type="text"
+      name="ingredient-quantity-3"
+      placeholder="Quantity"
+    />
+    <input
+      value="slice"
+      type="text"
+      name="ingredient-unit-3"
+      placeholder="Unit"
+    />
+    <input
+      value="cheddar cheese"
+      type="text"
+      name="ingredient-description-3"
+      placeholder="Description"
+    />
+    <label>Ingredient 4</label>
+    <input
+      type="text"
+      name="ingredient-quantity-4"
+      placeholder="Quantity"
+    />
+    <input
+      type="text"
+      name="ingredient-unit-4"
+      placeholder="Unit"
+    />
+    <input
+      type="text"
+      name="ingredient-description-4"
+      placeholder="Description"
+    />
+    <label>Ingredient 5</label>
+    <input
+      type="text"
+      name="ingredient-quantity-5"
+      placeholder="Quantity"
+    />
+    <input
+      type="text"
+      name="ingredient-unit-5"
+      placeholder="Unit"
+    />
+    <input
+      type="text"
+      name="ingredient-description-5"
+      placeholder="Description"
+    />
+    <label>Ingredient 6</label>
+    <input
+      type="text"
+      name="ingredient-quantity-6"
+      placeholder="Quantity"
+    />
+    <input
+      type="text"
+      name="ingredient-unit-6"
+      placeholder="Unit"
+    />
+    <input
+      type="text"
+      name="ingredient-description-6"
+      placeholder="Description"
+    />
+  </div>
 
-<button class="btn upload__btn">
-<svg>
-  <use href="src/img/icons.svg#icon-upload-cloud"></use>
-</svg>
-<span>Upload</span>
-</button>`;
+  <button class="btn upload__btn">
+    <svg>
+      <use href="${icons}#icon-upload-cloud"></use>
+    </svg>
+    <span>Upload</span>
+  </button>`;
 
 class AddRecipeView extends View {
   _parentElement = document.querySelector('.upload');
@@ -102,6 +169,7 @@ class AddRecipeView extends View {
   constructor() {
     super();
     this._addHandlerOpenWindow();
+    this._resetForm();
   }
 
   /**
@@ -158,7 +226,6 @@ class AddRecipeView extends View {
     this._parentElement.addEventListener('submit', function (e) {
       // Prevent form submission from realoding the page
       e.preventDefault();
-      console.log(new FormData(this));
       // This puts all the data from the form into a weird FormData object that we then destructure into an array and eventually into a recipe object
       const dataArray = [...new FormData(this)];
       const recipe = Object.fromEntries(dataArray);

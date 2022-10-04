@@ -175,27 +175,47 @@ export const toggleBookmark = function (recipe) {
 export const uploadRecipe = async function (newRecipe) {
   try {
     // 1. Transform ingredients to proper format
-    // 1a. From the recipe object make an array of its properties
-    // Field 'a: b' will transform into elements [a, b]
-    const ingredients = Object.entries(newRecipe)
-      // 1b. We only want ingredient fields (i.e. the ones that start with 'ingredient')
-      .filter(
-        el => el[0].toLowerCase().startsWith('ingredient') && el[1] !== ''
-      )
-      // 1c. The value of each field is a string 'quantity,unit,description'
-      // We want to split it into separate values
+    const ingredientsData = ['quantity', 'unit', 'description'].map(type => {
+      // 1a. From the recipe object make an array of its properties
+      // Field 'a: b' will transform into elements [a, b]
+      return (
+        Object.entries(newRecipe)
+          // 1b. We only want ingredient fields (i.e. the ones that start with 'ingredient-${type}')
+          .filter(el => el[0].toLowerCase().startsWith(`ingredient-${type}`))
+          .map(el => {
+            // Cut the spaces
+            let value = el[1].trim();
+            // If the value is supposed to be a string, we're done
+            if (type !== 'quantity') return value;
+            console.log(value);
+            // If no value was provided, we expect null in the data
+            if (value === '') return null;
+            // If a value was provided, we expect a number, not a string
+            return +value;
+          })
+      );
+    });
+    // ingredientsData is [quantitiesArray, unitsArray, descriptionsArray]
+    // They should be of same length, empty fields should not be thrown out
+    // Hence, this check
+    console.log(ingredientsData);
+    if (
+      ingredientsData[0].length !== ingredientsData[1].length ||
+      ingredientsData[0].length !== ingredientsData[2].length
+    )
+      throw new Error('You, Kira, personally fucked up');
+    //This will be an array of ingredient objects
+    const ingredients = ingredientsData[0]
+      // Transpose the array, so first axis would be ingredients, not field types
+      .map((_, i) => ingredientsData.map(row => row[i]))
+      // Form an object out of the three field types
       .map(el => {
-        const ingArr = ([quantity, unit, description] = el[1].split(',')).map(
-          el => el.trim()
-        );
-        // The resulting array should contain exactly quantity, unit and description
-        if (ingArr.length !== 3) throw new Error('Wrong ingredient format');
-        return {
-          quantity: quantity ? +quantity : null,
-          unit,
-          description,
-        };
-      });
+        const [quantity, unit, description] = el;
+        return quantity || unit || description
+          ? { quantity, unit, description }
+          : undefined;
+      })
+      .filter(el => el !== undefined);
 
     // 2. Reformat the newRecipe object to fit API's format
     const recipe = {
@@ -207,6 +227,7 @@ export const uploadRecipe = async function (newRecipe) {
       title: newRecipe.title,
       ingredients,
     };
+    console.log(recipe);
 
     // 3. Send the recipe to the API and await its answer (in particular, the recipe's ID)
     const data = await sendJSON(`${API_URL}?key=${DEV_KEY}`, recipe);

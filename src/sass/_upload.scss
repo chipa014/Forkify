@@ -44,14 +44,21 @@
 
 .upload {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
   gap: 4rem 6rem;
 
   &__column {
     display: grid;
-    grid-template-columns: 1fr 2.8fr;
     align-items: center;
     gap: 1.5rem;
+
+    &__info {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    &__ingredients {
+      grid-template-columns: 1fr 80px 100px 150px;
+    }
 
     & label {
       font-size: 1.5rem;

@@ -140,6 +140,7 @@ const controlAddRecipe = async function (newRecipe) {
     // 6. Update hash in url to current recipe
     window.history.pushState(null, '', `#${model.state.recipe.id}`);
   } catch (err) {
+    console.error(err.message);
     addRecipeView.renderError(err.message);
   }
 };
