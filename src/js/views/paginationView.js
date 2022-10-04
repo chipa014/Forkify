@@ -6,13 +6,18 @@ class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');
 
   _generateMarkup() {
-    const onlyPage = this._data.results.length <= 9;
+    // 1. Define helper boolean constants
+    // 1a. If the page rendered is the only page than no pagination buttons should be rendered
+    // const onlyPage = this._data.results.length <= 9;
+    // 1b. If the page is last, no 'next page' button should be rendered
     const isLast =
       this._data.currentPage ===
       Math.ceil(this._data.results.length / RESULTS_PER_PAGE);
     return `
       ${
-        this._data.currentPage == 1 || onlyPage
+        // 'Previous page' button is rendered only if the user's not on the first page
+        // onlyPage is redundant but kept for more readable code
+        this._data.currentPage == 1 //|| onlyPage
           ? ''
           : `<button data-goto="${
               this._data.currentPage - 1
@@ -24,7 +29,9 @@ class PaginationView extends View {
             </button>`
       }
       ${
-        onlyPage || isLast
+        // 'Next page' button is rendered only if user's not on the last page
+        //onlyPage || isLast
+        isLast
           ? ''
           : `<button data-goto="${
               this._data.currentPage + 1
@@ -37,6 +44,10 @@ class PaginationView extends View {
       }`;
   }
 
+  /**
+   * Publisher-subscriber way of adding eventListeners.
+   * @param {Function} handler A function tied to the eventListener.
+   */
   addHandlerPagination(handler) {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--inline');

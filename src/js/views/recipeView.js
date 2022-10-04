@@ -71,7 +71,7 @@ class RecipeView extends View {
          <div class="recipe__ingredients">
         <h2 class="heading--2">Recipe ingredients</h2>
         <ul class="recipe__ingredient-list">
-          ${this.#recipeIngredientsMarkup()}
+          ${this._recipeIngredientsMarkup()}
         </ul>
       </div>
          <div class="recipe__directions">
@@ -96,7 +96,11 @@ class RecipeView extends View {
       </div>`;
   }
 
-  #recipeIngredientsMarkup() {
+  /**
+   * A helper function that renders the ingredients part of the recipe
+   * @returns HTML markup for ingredients
+   */
+  _recipeIngredientsMarkup() {
     return this._data.ingredients
       .map(
         ingr => `
@@ -116,23 +120,41 @@ class RecipeView extends View {
       .join('');
   }
 
+  /**
+   * Publisher-subscriber way of adding eventListeners.
+   * @param {Function} handler A function tied to the eventListener.
+   */
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(event =>
       window.addEventListener(event, handler)
     );
   }
 
+  /**
+   * Publisher-subscriber way of adding eventListeners.
+   * @param {Function} handler A function tied to the eventListener.
+   */
   addHandlerServings(handler) {
     this._parentElement.addEventListener('click', function (e) {
+      // For several buttons we use event delegation
+      // User might click not on the button itself, but e.g. on its text content
       const btn = e.target.closest('.btn--update-servings');
+      // If the click was outside the button, nothing happens
       if (!btn) return;
+      //The number of servings is stored in the button's dataset in the markup
       handler(+btn.dataset.newServings);
     });
   }
 
+  /**
+   * Publisher-subscriber way of adding eventListeners.
+   * @param {Function} handler A function tied to the eventListener.
+   */
   addHandlerToggleBookmark(handler) {
     this._parentElement.addEventListener('click', function (e) {
+      // User might click not on the button itself, but e.g. on its text content
       const button = e.target.closest('.btn--bookmark');
+      // If the click was outside the button, nothing happens
       if (!button) return;
       handler();
     });

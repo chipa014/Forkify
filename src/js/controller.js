@@ -10,41 +10,48 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import paginationView from './views/paginationView.js';
 
-const recipeContainer = document.querySelector('.recipe');
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
-
+/**
+ * Control part of displaying the recipe
+ */
 const controlRecipe = async function () {
   try {
+    // 1. Get recipe id from hash in the url
     const id = window.location.hash.slice(1);
     if (!id) return;
+
+    // 2. Render a spinner while the recipe loads
     recipeView.renderSpinner();
 
-    // 0) Update search results page and bookmarks to mark the selected result
+    // 3. Update search results page and bookmarks to mark the selected result
     searchResultsView.update(model.getSearchResultsPage());
     bookmarksView.update(model.state.bookmarks);
-    // 1) Loading recipe
+
+    // 4. Load the recipe
     await model.loadRecipe(id);
 
-    // 2) Rendering recipe
+    // 5. Render the recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderError();
   }
 };
 
+/**
+ * Control part of displaying the search results
+ */
 const controlSearchResults = async function () {
   try {
-    // 1) Read query
+    // 1. Read query
     const query = searchBarView.getQuery();
     if (!query) return;
+
+    // 2. Render a spinner while the results load
     searchResultsView.renderSpinner();
 
-    // 2) Load query results from API
+    // 3. Load query results from API
     await model.loadSearchResults(query);
-    // 3) Render search results
-    const recipes = model.state.search.results;
+
+    // 4. Render search results
     searchResultsView.render(model.getSearchResultsPage());
     paginationView.render(model.state.search);
   } catch (err) {
@@ -52,18 +59,34 @@ const controlSearchResults = async function () {
   }
 };
 
+/**
+ * Control part of pagination system for search results
+ * @param {Number} newPage The number of page to render
+ */
 const controlPagination = function (newPage) {
+  // 1. Render the new page
   searchResultsView.render(model.getSearchResultsPage(newPage));
+
+  // 2. Render new pagination buttons
   paginationView.render(model.state.search);
 };
 
+/**
+ * Control part of servings functionality
+ * @param {*} newServingsNum The number of servings to render ingredient amounts for
+ */
 const controlServings = function (newServingsNum) {
+  // 0. Check for adequate number of servings
   if (newServingsNum <= 0) return;
-  // 1) Update servings in state
+  // 1. Update servings in state
   model.changeServings(newServingsNum);
-  // 2) Update servings in view
+  // 2. Update servings in view
   recipeView.update(model.state.recipe);
 };
+
+/**
+ * Control part of bookmark button in the recipe part
+ */
 
 const controlToggleBookmark = function () {
   try {
@@ -80,6 +103,9 @@ const controlToggleBookmark = function () {
   }
 };
 
+/**
+ * Rerenders bookmarks menu on load
+ */
 const controlBookmarks = function () {
   try {
     bookmarksView.render(model.state.bookmarks);
@@ -88,19 +114,39 @@ const controlBookmarks = function () {
   }
 };
 
+/**
+ * Control part of adding custom recipes
+ * @param {Object} newRecipe Object containing recipe data for the uploaded recipe
+ */
 const controlAddRecipe = async function (newRecipe) {
   try {
+    // 1. Render a spinner while the recipe uploads
     addRecipeView.renderSpinner();
-    const log = await model.uploadRecipe(newRecipe);
+
+    // 2. Upload the recipe and put it in state
+    const upload = model.uploadRecipe(newRecipe);
+    console.log(upload);
+    await upload;
+
+    // 3. Render the recipe
     recipeView.render(model.state.recipe);
+
+    // 4. Show a success message, close the modal
     addRecipeView.successfulUpload();
+
+    // 5. Rerender bookmarks (Custom recipes are bookmarked automatically)
     bookmarksView.render(model.state.bookmarks);
+
+    // 6. Update hash in url to current recipe
     window.history.pushState(null, '', `#${model.state.recipe.id}`);
   } catch (err) {
-    addRecipeView.renderError();
+    addRecipeView.renderError(err.message);
   }
 };
 
+/**
+ * Publisher-subscriber initiation of event listeners
+ */
 const init = function () {
   bookmarksView.addHandlerBookmarks(controlBookmarks);
   recipeView.addHandlerRender(controlRecipe);

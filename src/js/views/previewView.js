@@ -1,12 +1,19 @@
 import View from './view.js';
 import icons from 'url:../../img/icons.svg';
 
+// A helper parent class combining common methods from bookmarksView and searchResultsView
 export default class PreviewView extends View {
   _generateMarkup() {
-    return this._data.map(this.#generateMarkupPreview).join('');
+    // It's written this way because multiple recipes are rendered next to each other
+    return this._data.map(this._generateMarkupPreview).join('');
   }
 
-  #generateMarkupPreview(recipe) {
+  /**
+   * Helper function for render
+   * @param {Object} recipe
+   * @returns HTML markup for recipe preview
+   */
+  _generateMarkupPreview(recipe) {
     const currentId = window.location.hash.slice(1);
     return `
       <li class="preview">
