@@ -196,7 +196,7 @@ export const uploadRecipe = async function (newRecipe) {
       ingredientsData[0].length !== ingredientsData[1].length ||
       ingredientsData[0].length !== ingredientsData[2].length
     )
-      throw new Error('You, Kira, personally fucked up');
+      throw new Error('Error occured during ingredients reformatting');
     //This will be an array of ingredient objects
     const ingredients = ingredientsData[0]
       // Transpose the array, so first axis would be ingredients, not field types
