@@ -2,9 +2,6 @@ import View from './view.js';
 import icons from 'url:../../img/icons.svg';
 import { MODAL_MESSAGE_DISPLAY_TIME, MODAL_FADEOUT } from '../config.js';
 
-// TO DO:
-// Explain errors
-// Don't call successful recipe if it is not successful
 const emptyFormMarkup = `
   <div class="upload__column upload__column__info">
     <h3 class="upload__heading">Recipe data</h3>
@@ -43,21 +40,18 @@ const emptyFormMarkup = `
     <input
       value="4"
       type="text"
-      required
       name="ingredient-quantity-1"
       placeholder="Quantity"
     />
     <input
       value="slice"
       type="text"
-      required
       name="ingredient-unit-1"
       placeholder="Unit"
     />
     <input
       value="white bread"
       type="text"
-      required
       name="ingredient-description-1"
       placeholder="Description"
     />
@@ -164,6 +158,7 @@ class AddRecipeView extends View {
   _btnClose = document.querySelector('.btn--close-modal ');
 
   _message = 'Success!';
+  _errorMessage = 'Something went wrong. Please try again.';
 
   // Explanation in _addHandlerOpenWindow
   constructor() {
@@ -244,6 +239,32 @@ class AddRecipeView extends View {
       this._resetForm.bind(this),
       MODAL_MESSAGE_DISPLAY_TIME + MODAL_FADEOUT
     );
+  }
+
+  renderError(message = this._errorMessage) {
+    const errorMarkup = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${icons}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>`;
+    this._parentElement.querySelectorAll('.error').forEach(el => el.remove());
+    this._parentElement.querySelectorAll('.spinner').forEach(el => el.remove());
+    this._parentElement.insertAdjacentHTML('beforeend', errorMarkup);
+  }
+
+  renderSpinner() {
+    const spinnerMarkup = `
+      <div class="spinner">
+        <svg>
+          <use href="${icons}#icon-loader"></use>
+        </svg>
+      </div>`;
+    this._parentElement.querySelectorAll('.error').forEach(el => el.remove());
+    this._parentElement.insertAdjacentHTML('beforeend', spinnerMarkup);
   }
 }
 

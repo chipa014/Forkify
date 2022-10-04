@@ -124,9 +124,7 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView.renderSpinner();
 
     // 2. Upload the recipe and put it in state
-    const upload = model.uploadRecipe(newRecipe);
-    console.log(upload);
-    await upload;
+    await model.uploadRecipe(newRecipe);
 
     // 3. Render the recipe
     recipeView.render(model.state.recipe);

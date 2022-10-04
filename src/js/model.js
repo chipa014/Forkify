@@ -3,16 +3,12 @@ import { async } from 'regenerator-runtime';
 import { API_URL, DEV_KEY, RESULTS_PER_PAGE } from './config.js';
 import { deleteJSON, getJSON, sendJSON } from './helpers.js';
 
-//TO DO:
-//Do we need state.search.query? If not, remove it.
-
 /**
  * State contains current info to be displayed
  */
 export const state = {
   recipe: {},
   search: {
-    query: '',
     results: [],
     currentPage: 1,
   },
@@ -70,7 +66,6 @@ export const loadRecipe = async function (id) {
 export const loadSearchResults = async function (query) {
   try {
     // 1. Setup state for proper render
-    state.search.query = query;
     state.search.currentPage = 1;
 
     // 2. Get data from API. Dev key allows for custom recipes to show up in the search
@@ -187,7 +182,6 @@ export const uploadRecipe = async function (newRecipe) {
             let value = el[1].trim();
             // If the value is supposed to be a string, we're done
             if (type !== 'quantity') return value;
-            console.log(value);
             // If no value was provided, we expect null in the data
             if (value === '') return null;
             // If a value was provided, we expect a number, not a string
@@ -198,7 +192,6 @@ export const uploadRecipe = async function (newRecipe) {
     // ingredientsData is [quantitiesArray, unitsArray, descriptionsArray]
     // They should be of same length, empty fields should not be thrown out
     // Hence, this check
-    console.log(ingredientsData);
     if (
       ingredientsData[0].length !== ingredientsData[1].length ||
       ingredientsData[0].length !== ingredientsData[2].length
@@ -216,6 +209,7 @@ export const uploadRecipe = async function (newRecipe) {
           : undefined;
       })
       .filter(el => el !== undefined);
+    if (ingredients.length === 0) throw new Error('No ingredients');
 
     // 2. Reformat the newRecipe object to fit API's format
     const recipe = {
@@ -227,7 +221,6 @@ export const uploadRecipe = async function (newRecipe) {
       title: newRecipe.title,
       ingredients,
     };
-    console.log(recipe);
 
     // 3. Send the recipe to the API and await its answer (in particular, the recipe's ID)
     const data = await sendJSON(`${API_URL}?key=${DEV_KEY}`, recipe);

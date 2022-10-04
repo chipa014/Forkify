@@ -85,6 +85,7 @@ export const deleteJSON = async function (url) {
     };
     return handleJSON(url, options);
   } catch (err) {
+    console.error(err.message);
     throw err;
   }
 };
