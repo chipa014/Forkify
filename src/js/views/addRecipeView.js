@@ -7,88 +7,88 @@ const emptyFormMarkup = `
     <h3 class="upload__heading">Recipe data</h3>
     <label>Title</label>
     <input
-      value="Classic Cheese Sandwhich"
+      value=""
       required
       name="title"
       type="text"
     />
     <label>URL</label>
     <input
-      value="https://www.allrecipes.com/recipe/23891/grilled-cheese-sandwich/"
+      value=""
       required
       name="sourceUrl"
       type="text"
     />
     <label>Image URL</label>
     <input
-      value="https://www.allrecipes.com/thmb/_LWAiEjctfCof1OIDvp-IbO5xrQ=/2250x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/23891-grilled-cheese-sandwich-molly-1x1-1-b241c5d092c54aafa2d81cdd4e5a8e07.jpg"
+      value=""
       required
       name="image"
       type="text"
     />
     <label>Publisher</label>
-    <input value="Allrecipes" required name="publisher" type="text" />
+    <input value="" required name="publisher" type="text" />
     <label>Prep time</label>
-    <input value="20" required name="cookingTime" type="number" />
+    <input value="" required name="cookingTime" type="number" />
     <label>Servings</label>
-    <input value="2" required name="servings" type="number" />
+    <input value="" required name="servings" type="number" />
   </div>
 
   <div class="upload__column upload__column__ingredients">
     <h3 class="upload__heading">Ingredients</h3>
     <label>Ingredient 1</label>
     <input
-      value="4"
+      value=""
       type="text"
       name="ingredient-quantity-1"
       placeholder="Quantity"
     />
     <input
-      value="slice"
+      value=""
       type="text"
       name="ingredient-unit-1"
       placeholder="Unit"
     />
     <input
-      value="white bread"
+      value=""
       type="text"
       name="ingredient-description-1"
       placeholder="Description"
     />
     <label>Ingredient 2</label>
     <input
-      value="3"
+      value=""
       type="text"
       name="ingredient-quantity-2"
       placeholder="Quantity"
     />
     <input
-      value="tablespoon"
+      value=""
       type="text"
       name="ingredient-unit-2"
       placeholder="Unit"
     />
     <input
-      value="butter"
+      value=""
       type="text"
       name="ingredient-description-2"
       placeholder="Description"
     />
     <label>Ingredient 3</label>
     <input
-      value="2"
+      value=""
       type="text"
       name="ingredient-quantity-3"
       placeholder="Quantity"
     />
     <input
-      value="slice"
+      value=""
       type="text"
       name="ingredient-unit-3"
       placeholder="Unit"
     />
     <input
-      value="cheddar cheese"
+      value=""
       type="text"
       name="ingredient-description-3"
       placeholder="Description"
