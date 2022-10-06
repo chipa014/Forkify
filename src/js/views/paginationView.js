@@ -7,9 +7,7 @@ class PaginationView extends View {
 
   _generateMarkup() {
     // 1. Define helper boolean constants
-    // 1a. If the page rendered is the only page than no pagination buttons should be rendered
-    // const onlyPage = this._data.results.length <= 9;
-    // 1b. If the page is last, no 'next page' button should be rendered
+    // If the page is last, no 'next page' button should be rendered
     const isLast =
       this._data.currentPage ===
       Math.ceil(this._data.results.length / RESULTS_PER_PAGE);
